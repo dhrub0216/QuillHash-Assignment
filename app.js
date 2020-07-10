@@ -1,64 +1,65 @@
-const express = require('express')
-const bcrypt = require('bcryptjs')
+var express = require('express');
+var mongoose= require('mongoose')
+//var validator= require('validator')
+//var fs= require('fs')
+var app = express();
+var port=3000;
+app.use(express.json())
 
-const app = express()
-const port = 3000
+app.post('/',function(req,res){
+    res.send(req.body.name);
+});
 
-app.get('/', (req, res) => res.send('Hello World!'))
-
-
-const User= {
-    email : {
-        type:String,
-        unique: true,
+var userSchema= new mongoose.Schema({
+    email: {
+        type: 'String',
         required: true,
-        trim:true,
-        validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error ('Email is invalid')
-            }
-        }
-
+        trim: true,
+        // validate(email){ 
+        //     if (!validator.isEmail(email)){
+        //         return ("Your Email Id is not correct")
+        //     }
+        // }
     },
     password: {
-        type: String,
-        required: true,
-        minlength: 7,
-        trim: true,
-        validate(value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error('Password cannot contain "password"')
-            }
-        }
+        type: 'String',
+        required:true,
+        trim :true,
+        minlength:6
     }
+})
+
+// const readNginx= function(){
+//     fs.readFile('./tmp/directory/nginx.log', function(err,data){
+//         if(err){
+//             throw err
+//         }
+//         console.log(data)
+//     })
+//     }
+
+app.post('/login',function(req,res){
+const User= mongoose.model('User',userSchema)
+const x= req.body
+const user= new User(x)
+try{
+    user.save()
+  //  readNginx()
+    res.status(200).send(user.name,user.password)
+} catch (e) {
+    res.status(404)
 }
-
-const findByCredentials = async (email, password) => {
-    const user = await User.findOne({ email })
-
-    if (!user) {
-        throw new Error('Unable to login')
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password)
-
-    if (!isMatch) {
-        throw new Error('Unable to login')
-    }
-
-    return user
-}
-
-app.post('/users/login', async (req, res) => {
-    try {
-        const user = await User.findByCredentials(req.body.email, req.body.password)
-        const token = await user.generateAuthToken()
-        res.send({ user })
-    } catch (e) {
-        res.status(400).send()
-    }
 })
 
 
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+
+
+
+
+app.listen(port,function(){
+    console.log('Server running on port '+port);
+});
+
+
