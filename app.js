@@ -55,4 +55,15 @@ app.listen(port,function(){
     console.log('Server running on port '+port);
 });
 
+var AWS= require('aws-sdk')
+var path=require('path')
+var hbs=require('hbs')
 
+
+const viewsPath= path.join(__dirname, './templates/views')
+
+app.set('views',viewsPath)
+
+app.get('/login',(req,res)=>{
+    res.render('login')
+})
