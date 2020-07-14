@@ -13,6 +13,7 @@ router.post('/auth/login', authController.login);
 
 router.post('/auth/jwdtoken',authController.validate)
 router.get('/auth/fetchlogs', authController.fetchlogs)
+router.get('/auth/filterlogsbyip', authController.filterlogsbyIP)
+router.get('/auth/filterlogsbydate', authController.filterlogsbydate)
 
-   
 module.exports= router

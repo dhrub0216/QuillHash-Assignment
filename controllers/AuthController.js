@@ -1,4 +1,6 @@
-var authService = require('../Services/AuthService');
+var authService = require('../services/AuthService');
+var nginxlogService= require('../services/nginxlogs.service')
+//const re= require('re')
 var connector= null
 exports.register = function(req, res){
     let register = authService.Register(req.body, function(err, result){
@@ -28,13 +30,30 @@ exports.login = function(req, res){
          res.send(result)
      })
  }
-const fs= require('fs')
+
  exports.fetchlogs= function(req,res){
-        fs.readFile('./tmp/directory/nginx.log', function(err,data){
-            if(err){
-               res.send(err)
-            }
-            res.send(data.toString())
-        })
-        
+     let fetch= nginxlogService.Fetchlogs(req.body, function(err, result ){
+        if (err){
+            res.send(err)
+        }
+        res.send(result)
+     })
  }
+
+ exports.filterlogsbyIP= function(req,res){
+     let fetch= nginxlogService.Filterlogsbyip(req.body, function(err, result ){
+        if (err){
+            res.send(err)
+        }
+        res.send(result)   
+  })
+ }
+ 
+ exports.filterlogsbydate= function(req,res){
+    let fetch= nginxlogService.Filterlogsbydate(req.body, function(err, result ){
+       if (err){
+           res.send(err)
+       }
+       res.send(result)
+        })
+}
