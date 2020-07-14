@@ -15,6 +15,6 @@ router.post('/auth/login', authController.login);
 router.post('/auth/jwdtoken',authController.validate)
 router.get('/auth/fetchlogs', nginxController.fetchlogs)
 router.get('/auth/filterlogsbyip', nginxController.filterlogsbyIP)
-router.get('/auth/filterlogsbydate', nginxController.filterlogsbydate)
+router.get('/auth/filterlogsbymonth', nginxController.filterlogsbymonth)
 
 module.exports= router

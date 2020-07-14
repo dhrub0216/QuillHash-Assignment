@@ -18,8 +18,8 @@ exports.filterlogsbyIP= function(req,res){
  })
 }
 
-exports.filterlogsbydate= function(req,res){
-   let fetch= nginxlogService.Filterlogsbydate(req.body, function(err, result ){
+exports.filterlogsbymonth= function(req,res){
+   let fetch= nginxlogService.Filterlogsbymonth(req.body, function(err, result ){
       if (err){
           res.send(err)
       }
