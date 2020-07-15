@@ -64,13 +64,10 @@ exports.Login = function (body, callback) {
 };
 
 exports.Validate = function(token, callback){
-  // console.log(token)
-  // console.log()
    request({
        url : `https://cognito-idp.${pool_region}.amazonaws.com/${poolData.UserPoolId}/.well-known/jwks.json`,
        json : true
     }, function(error, response, body){
-      // console.log(error)
        if (!error && response.statusCode === 200) {
            pems = {};
            var keys = body['keys'];
