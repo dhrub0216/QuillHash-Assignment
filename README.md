@@ -14,5 +14,7 @@ In nginxlogService.js, the execution of fetching files and filtering with the he
 QUESTION- 2
 
 In case of load balancing by ELB, we need to move our authentication. When we are distributing traffic, we need to make sure that the authentication is completed before fetch/filter functionality. 
-But if authentication and authorisation is on different servers then we might face problems as we are storing data (JWD token)
+
+But if authentication and authorisation is on different servers then we might face problems as we are storing data (JWD token).
+
 SOLUTION- Keeping authentication and authorisation on same server and reading/fetching file on another. 
